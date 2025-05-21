@@ -31,7 +31,10 @@ function gerarHorarios() {
   horaSelect.innerHTML = "";
   for (let h = 6; h <= 22; h++) {
     const hora = h.toString().padStart(2, '0') + ":00";
-    horaSelect.innerHTML += `<option>${hora}</option>`;
+    const option = document.createElement('option');
+    option.value = hora;
+    option.textContent = hora;
+    horaSelect.appendChild(option);
   }
 }
 
@@ -45,11 +48,16 @@ dataInput.addEventListener('change', () => {
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const nome = document.getElementById('nome').value;
+  const nome = document.getElementById('nome').value.trim();
   const servico = document.getElementById('servico').value;
   const profissional = document.getElementById('profissional').value;
   const data = document.getElementById('data').value;
   const hora = document.getElementById('hora').value;
+
+  if (!nome || !servico || !profissional || !data || !hora) {
+    alert("Por favor, preencha todos os campos.");
+    return;
+  }
 
   const agendamento = { nome, servico, profissional, data, hora };
   await push(ref(db, 'agendamentos'), agendamento);
@@ -104,5 +112,10 @@ function logout() {
   painelArea.classList.add("hidden");
   agendamentoArea.classList.remove("hidden");
 }
+
+window.mostrarLogin = mostrarLogin;
+window.voltar = voltar;
+window.fazerLogin = fazerLogin;
+window.logout = logout;
 
 window.onload = gerarHorarios;
