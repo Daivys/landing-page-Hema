@@ -1,3 +1,18 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.8.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDO14kBC-P6K08cYuhgxlAV-c_lHxbP244",
+  authDomain: "studiohemaagendamentos.firebaseapp.com",
+  projectId: "studiohemaagendamentos",
+  storageBucket: "studiohemaagendamentos.firebasestorage.app",
+  messagingSenderId: "61758217017",
+  appId: "1:61758217017:web:63dad6f7c6dd3f2a72e6e8",
+  measurementId: "G-LWRYWS4GMN"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const confirmacao = document.getElementById('confirmacao');
 const agendamentosDiv = document.getElementById('agendamentos');
@@ -28,7 +43,7 @@ dataInput.addEventListener('change', () => {
   }
 });
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const nome = document.getElementById('nome').value;
   const servico = document.getElementById('servico').value;
@@ -37,9 +52,7 @@ form.addEventListener('submit', (e) => {
   const hora = document.getElementById('hora').value;
 
   const agendamento = { nome, servico, profissional, data, hora };
-  const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
-  agendamentos.push(agendamento);
-  localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+  await push(ref(db, 'agendamentos'), agendamento);
 
   confirmacao.style.display = "block";
   confirmacao.innerHTML = `<strong>Agendamento confirmado!</strong><br>Nome: ${nome}<br>Serviço: ${servico}<br>Profissional: ${profissional}<br>Data: ${data}<br>Hora: ${hora}`;
@@ -73,15 +86,17 @@ function fazerLogin() {
 }
 
 function carregarAgendamentos() {
-  const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
-  agendamentosDiv.innerHTML = "";
-  agendamentos.forEach((a) => {
-    agendamentosDiv.innerHTML += `
-      <div class="agenda-item">
-        <strong>${a.nome}</strong> - ${a.servico}<br>
-        Profissional: ${a.profissional}<br>
-        Data: ${a.data} às ${a.hora}
-      </div>`;
+  onValue(ref(db, 'agendamentos'), (snapshot) => {
+    agendamentosDiv.innerHTML = "";
+    snapshot.forEach((childSnapshot) => {
+      const a = childSnapshot.val();
+      agendamentosDiv.innerHTML += `
+        <div class="agenda-item">
+          <strong>${a.nome}</strong> - ${a.servico}<br>
+          Profissional: ${a.profissional}<br>
+          Data: ${a.data} às ${a.hora}
+        </div>`;
+    });
   });
 }
 
