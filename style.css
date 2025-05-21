@@ -1,65 +1,70 @@
-
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
   background-color: #fff0f5;
+  color: #333;
   margin: 0;
   padding: 0;
-  color: #333;
-}
-.container, .login-container {
-  max-width: 900px;
-  margin: 40px auto;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #c71585;
-  padding: 30px;
-}
-h1, h2 {
   text-align: center;
-  color: #c71585;
 }
-label {
-  display: block;
-  margin: 10px 0 5px;
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #ffe4e1;
+  border-radius: 10px;
+  margin-top: 2rem;
 }
+
 input, select, button {
+  display: block;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  border-radius: 6px;
 }
+
 button {
-  background-color: #c71585;
+  background-color: #d36ba6;
   color: white;
-  font-weight: bold;
+  border: none;
   cursor: pointer;
 }
+
 button:hover {
-  background-color: #a0106d;
+  background-color: #c05b99;
 }
-.confirmation, .agenda-list {
-  background-color: #ffe4ec;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-.agenda-item {
-  border-bottom: 1px solid #d69cb6;
-  padding: 10px 0;
-}
+
 .hidden {
   display: none;
 }
-.top-bar {
-  text-align: right;
-  margin: 10px 0;
+
+.confirmacao {
+  margin-top: 1rem;
+  background-color: #dff0d8;
+  padding: 1rem;
+  border-radius: 5px;
 }
+
+.erro {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+.agenda-item {
+  background-color: #fff;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
 footer {
   text-align: center;
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #ffe4ec;
-  color: #a0106d;
+  padding: 1rem;
+  margin-top: 2rem;
+  background-color: #f8c6dc;
   font-weight: bold;
 }
